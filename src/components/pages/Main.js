@@ -1,7 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Shelf from '../Shelf';
+import * as BooksAPI from '../../BooksAPI'
 
 class Main extends React.Component {
+  componentDidMount(){
+    BooksAPI.getAll()
+    .then(books => {
+      console.log(books);
+    });
+  }
+
   render(){
     return (
       <div className="list-books">
@@ -10,7 +19,7 @@ class Main extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            
+            <Shelf />
 
           </div>
         </div>
