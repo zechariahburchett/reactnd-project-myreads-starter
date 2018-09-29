@@ -4,11 +4,20 @@ import Shelf from '../Shelf';
 import * as BooksAPI from '../../BooksAPI'
 
 class Main extends React.Component {
+  
   componentDidMount(){
     BooksAPI.getAll()
     .then(books => {
       console.log(books);
+      this.setState({ books });
     });
+  }
+
+  constructor(props){
+    super(props);
+    this.state={
+      books:[]
+    }
   }
 
   render(){
