@@ -4,7 +4,7 @@ import Shelf from '../Shelf';
 import * as BooksAPI from '../../BooksAPI'
 
 class Main extends React.Component {
-  
+
   componentDidMount(){
     BooksAPI.getAll()
     .then(books => {
@@ -28,8 +28,9 @@ class Main extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Shelf />
-
+            <Shelf name="Currently Reading" books={this.state.books.filter(book => book.shelf === "currentlyReading")} />
+            <Shelf name="Want To Read" books={this.state.books.filter(book => book.shelf === "wantToRead")} />
+            <Shelf name="Read" books={this.state.books.filter(book => book.shelf === "read")} />
           </div>
         </div>
         <div className="open-search">
