@@ -13,11 +13,22 @@ class Main extends React.Component {
     });
   }
 
+//called by children to reset app state after api update
+//this will repull the api data and set the state of the app
+  updateAppState = () =>{
+    BooksAPI.getAll()
+    .then(books => {
+      this.setState({ books });
+    });
+}
+
+
   constructor(props){
     super(props);
     this.state={
       books:[]
     }
+    this.handler = this.updateAppState.bind(this);
   }
 
   render(){
@@ -28,9 +39,9 @@ class Main extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Shelf name="Currently Reading" books={this.state.books.filter(book => book.shelf === "currentlyReading")} />
-            <Shelf name="Want To Read" books={this.state.books.filter(book => book.shelf === "wantToRead")} />
-            <Shelf name="Read" books={this.state.books.filter(book => book.shelf === "read")} />
+            <Shelf updateAppState={this.updateAppState} name="Currently Reading" books={this.state.books.filter(book => book.shelf === "currentlyReading")} />
+            <Shelf updateAppState={this.updateAppState} name="Want To Read" books={this.state.books.filter(book => book.shelf === "wantToRead")} />
+            <Shelf updateAppState={this.updateAppState} name="Read" books={this.state.books.filter(book => book.shelf === "read")} />
           </div>
         </div>
         <div className="open-search">
