@@ -5,6 +5,10 @@ import Book from '../Book';
 class Search extends React.Component {
 
   componentDidMount(){
+    this.getBooks();
+  }
+
+  getBooks = () => {
     BooksAPI.getAll()
     .then(response => {
       this.setState({ books: response });
@@ -24,31 +28,27 @@ class Search extends React.Component {
     BooksAPI.update(book, shelf)
     .then(response => {
       book.shelf = shelf;
-      this.setState(state => ({
-        books: state.books.filter(b => b.id !== book.id).concat([book])
-      }));
+      this.getBooks();
     });
   }
 
   updateQuery = (query) => {
-    this.setState({query: query}, this.submitSearch);
+    this.setState({query: query}, this.processSearch);
   }
 
-  submitSearch(){
+  processSearch(){
     if(this.state.query.length === 0 || this.state.query === undefined){
       return this.setState({ searchResults: [] });
     }
     BooksAPI.search(this.state.query.trim()).then(response => {
-      console.log(response);
       if(response.error){
         return this.setState({ searchResults: [] });
       }
       else{
-        response.forEach(b => {
-          let f = this.state.books.filter(B => B.id === b.id);
-          if (f[0]){
-            console.log('match');
-            b.shelf = f[0].shelf;
+        response.forEach(book => {
+          let filteredBooks = this.state.books.filter(Book => Book.id === book.id);
+          if (filteredBooks[0]){
+            book.shelf = filteredBooks[0].shelf;
           }
         });
         return this.setState({ searchResults: response });
