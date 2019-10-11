@@ -13,13 +13,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "yarn run build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": {
-    "https://zechariahburchett.github.io/myreads"
-  }
+  "homepage": "https://zechariahburchett.github.io/reactnd-project-myreads-starter"
 }
